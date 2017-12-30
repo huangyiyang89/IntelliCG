@@ -1,0 +1,71 @@
+﻿<controls:MetroWindow x:Class="IntelliCG.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:IntelliCG"
+        mc:Ignorable="d"
+        Title="GameWindow" Height="400" Width="640" ResizeMode="NoResize"
+                      Closed="GameWindow_OnClosed">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="高速战斗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="步步遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="战斗料理" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="移动加速" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="采集加速" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="5" Text="自动战斗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="6" Text="允许吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="7" Text="烧一技能" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="自动遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <controls:ToggleSwitchButton Name="Switch1"  Grid.Column="1" Grid.Row="0" Width="auto" Click="Switch1_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch2" Grid.Column="1" Grid.Row="1" Width="auto" Click="Switch2_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch3" Grid.Column="1" Grid.Row="2" Width="auto" Click="Switch3_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch4" Grid.Column="1" Grid.Row="3" Width="auto" Click="Switch4_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch5" Grid.Column="1" Grid.Row="4" Width="auto" Click="Switch5_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch6" Grid.Column="1" Grid.Row="5" Width="auto" Click="Switch6_Click"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch7" Grid.Column="1" Grid.Row="6" Width="auto" Click="Switch7_Click" ToolTip="自动战斗允许使用补给品"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch8" Grid.Column="1" Grid.Row="7" Width="auto" Click="Switch8_Click" ToolTip="把要烧的技能放第一格"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch9" Grid.Column="1" Grid.Row="8" Width="auto" Click="Switch9_Click" ToolTip="自动走动范围+-2"></controls:ToggleSwitchButton>
+            <Button Content="Button" Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" Grid.RowSpan="1" Click="Button_Click"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <RichTextBox Name="RichTextBox" Grid.ColumnSpan="5" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0" ></RichTextBox>
+        </Grid>
+    </Grid>
+
+</controls:MetroWindow>
