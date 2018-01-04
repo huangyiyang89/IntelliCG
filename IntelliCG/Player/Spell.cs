@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using IntelliCG.MemoryHelper;
 
 namespace IntelliCG.Player
 {
@@ -41,7 +42,7 @@ namespace IntelliCG.Player
         public const int LevelOffset = 0x94;
 
 
-        public Spell(int hwnd, int index) : base(hwnd)
+        public Spell(Memo memo, int index) : base(memo)
         {
             Index = index;
         }
@@ -50,10 +51,10 @@ namespace IntelliCG.Player
 
         public bool Exist => Name != "";
 
-        public string Name => Dm.ReadString(Hwnd, (NameBase + Offset * Index).ToString("X"), 0, 20);
+        public string Name => Memo.ReadString(NameBase + Offset * Index,20);
 
 
-        public int Level => Dm.ReadInt(Hwnd, (LevelNumberBase + Offset * Index).ToString("X"), 0)-1;
+        public int Level => Memo.ReadInt(LevelNumberBase + Offset * Index) - 1;
 
         //public SpellType SkillType
         //{
@@ -94,8 +95,12 @@ namespace IntelliCG.Player
         //    }
         //}
 
-        public int MpCost => Dm.ReadInt(Hwnd,(LevelCostBase + Offset * Index + LevelOffset * Level).ToString("X"), 0);
+        public int MpCost => Memo.ReadInt(LevelCostBase + Offset * Index + LevelOffset * Level);
 
+        public int GetLevelCost(int level)
+        {
+           return Memo.ReadInt(LevelCostBase + Offset * Index + LevelOffset * level);
+        }
         public bool Is(string name)
         {
             return Name.Contains(name);

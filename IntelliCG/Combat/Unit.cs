@@ -51,5 +51,32 @@ namespace IntelliCG.Combat
         public bool IsInFront => (Index > 4 && Index < 10) || Index >14;
 
         public Unit FrontUnit => IsInFront == false ? _units[Index + 5] : null;
+
+        //14 12 10 11 13
+        // 19 17 15 16 18
+        // 
+        // 9 7 5 6 8
+        // 4 2 0 1 3
+
+        public List<Unit> CrossUnits
+        {
+            get
+            {
+                var frontOrBehind = IsInFront ? Index - 5 : Index + 5;
+                var type = Index % 5;
+                switch (type)
+                {
+                    case 0:
+                        return _units.FindAll(Index,Index + 1, Index + 2, frontOrBehind);
+                    case 1:
+                        return _units.FindAll(Index,Index - 1, Index + 2, frontOrBehind);
+                    case 2:
+                        return _units.FindAll(Index,Index - 2, Index + 2, frontOrBehind);
+                    default:
+                        return _units.FindAll(Index,Index - 2, frontOrBehind);
+                }
+            }
+        }
+
     }
 }

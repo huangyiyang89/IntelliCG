@@ -31,8 +31,8 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>28</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>52</ApplicationRevision>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -151,7 +151,7 @@
     </Compile>
     <Compile Include="Combat\AutoCombat.cs" />
     <Compile Include="Combat\Combat.cs" />
-    <Compile Include="Combat\ICombatStrategy.cs" />
+    <Compile Include="Combat\CombatStrategy.cs" />
     <Compile Include="Combat\Unit.cs" />
     <Compile Include="Combat\UnitList.cs" />
     <Compile Include="GameWindow.xaml.cs">
@@ -168,7 +168,10 @@
     <Compile Include="Base.cs" />
     <Compile Include="CrossGate.cs" />
     <Compile Include="Cheat\Cheat.cs" />
-    <Compile Include="Player\Job.cs" />
+    <Compile Include="MemoryHelper\Memo.cs" />
+    <Compile Include="Player\Enums.cs" />
+    <Compile Include="Script\MoveCondition.cs" />
+    <Compile Include="Script\Script.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="Pet\Pet.cs" />
     <Compile Include="Pet\PetList.cs" />
@@ -216,17 +219,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="Dm">
-      <Guid>{84288AAD-BA02-4EF2-85EC-3FAD4D11354D}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>True</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="icon.ico">

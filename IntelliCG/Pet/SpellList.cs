@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntelliCG.MemoryHelper;
 
 namespace IntelliCG.Pet
 {
     public class SpellList:Base
     {
-        public SpellList(int hwnd,int petIndex) : base(hwnd)
+        public SpellList(Memo memo,int petIndex) : base(memo)
         {
             PetIndex = petIndex;
             _spells=new List<Spell>();
             for (var i = 0; i < 10; i++)
             {
-                _spells.Add(new Spell(Hwnd,PetIndex,i));
+                _spells.Add(new Spell(memo,PetIndex,i));
             }
         }
 
@@ -29,7 +30,7 @@ namespace IntelliCG.Pet
         {
             get
             {
-                var customNameList = new List<string>() { "连击", "乾坤", "诸刃", "攻击", "防御" };
+                var customNameList = new List<string>() { "连击", "乾坤", "陨石魔法", "冰雹魔法", "风刃魔法", "火焰魔法", "攻击", "防御" };
                 foreach (var customName in customNameList)
                 {
                     var found = _spells.Find(s => s.Name.Contains(customName));

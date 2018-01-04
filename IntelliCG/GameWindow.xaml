@@ -6,7 +6,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:IntelliCG"
         mc:Ignorable="d"
-        Title="GameWindow" Height="400" Width="640" ResizeMode="NoResize"
+        Title="GameWindow" Height="500" Width="640" ResizeMode="NoResize"
                       Closed="GameWindow_OnClosed">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,6 +15,8 @@
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
@@ -39,6 +41,8 @@
             <TextBlock Grid.Column="0" Grid.Row="6" Text="允许吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="0" Grid.Row="7" Text="烧一技能" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="0" Grid.Row="8" Text="自动遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="9" Text="宠物吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Grid.Row="10" Text="新村脚本" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <controls:ToggleSwitchButton Name="Switch1"  Grid.Column="1" Grid.Row="0" Width="auto" Click="Switch1_Click"></controls:ToggleSwitchButton>
             <controls:ToggleSwitchButton Name="Switch2" Grid.Column="1" Grid.Row="1" Width="auto" Click="Switch2_Click"></controls:ToggleSwitchButton>
             <controls:ToggleSwitchButton Name="Switch3" Grid.Column="1" Grid.Row="2" Width="auto" Click="Switch3_Click"></controls:ToggleSwitchButton>
@@ -48,7 +52,9 @@
             <controls:ToggleSwitchButton Name="Switch7" Grid.Column="1" Grid.Row="6" Width="auto" Click="Switch7_Click" ToolTip="自动战斗允许使用补给品"></controls:ToggleSwitchButton>
             <controls:ToggleSwitchButton Name="Switch8" Grid.Column="1" Grid.Row="7" Width="auto" Click="Switch8_Click" ToolTip="把要烧的技能放第一格"></controls:ToggleSwitchButton>
             <controls:ToggleSwitchButton Name="Switch9" Grid.Column="1" Grid.Row="8" Width="auto" Click="Switch9_Click" ToolTip="自动走动范围+-2"></controls:ToggleSwitchButton>
-            <Button Content="Button" Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" Grid.RowSpan="1" Click="Button_Click"/>
+            <controls:ToggleSwitchButton Name="Switch10" Grid.Column="1" Grid.Row="9" Width="auto" Click="Switch10_Click" ToolTip="给宠物仍血瓶料理"></controls:ToggleSwitchButton>
+            <controls:ToggleSwitchButton Name="Switch11" Grid.Column="1" Grid.Row="10" Width="auto" Click="Switch11_Click"></controls:ToggleSwitchButton>
+            <Button Content="别点"  Grid.Row="11" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2" Click="ButtonBase_OnClick"/>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -64,7 +70,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <RichTextBox Name="RichTextBox" Grid.ColumnSpan="5" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0" ></RichTextBox>
+            <RichTextBox Name="RichTextBox" Grid.ColumnSpan="5" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0" TextChanged="RichTextBox_OnTextChanged"></RichTextBox>
         </Grid>
     </Grid>
 

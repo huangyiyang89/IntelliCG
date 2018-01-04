@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using IntelliCG.Pet;
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using IntelliCG.Combat;
+
 
 namespace IntelliCG.Pet.Tests
 {
@@ -15,10 +13,10 @@ namespace IntelliCG.Pet.Tests
         [TestMethod()]
         public void PetsTest()
         {
-            var map=new Hashtable();
-            map["asd"] = "asd";
-            var a=map["as1d"];
-            Assert.IsNotNull(a);
+            var a=new List<Unit>();
+            a.Add(null);
+            a.Add(null);
+            a.Add(null);
         }
     }
 }

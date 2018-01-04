@@ -1,64 +1,66 @@
-﻿namespace IntelliCG.Cheat
+﻿using IntelliCG.MemoryHelper;
+
+namespace IntelliCG.Cheat
 {
     public class Cheat:Base
     {
-        public Cheat(int hwnd):base(hwnd)
+        public Cheat(Memo memo):base(memo)
         {
         }
         
         public bool GaoSuZhanDou
         {
-            get=> Dm.ReadData(Hwnd, addr: "0450756", len: 2) == "90 90";
-            set => Dm.WriteData(Hwnd, "0450756", value ? "90 90" : "75 0B");
+            get=> Memo.ReadBytes(0x0450756, 2) == "90-90";
+            set => Memo.WriteBytes(0x0450756, value ? "90-90" : "75-0B");
         }
 
         public bool BuBuYuDi
         {
-            get => Dm.ReadData(Hwnd, "04865C9", 2) == "90 90";
+            get => Memo.ReadBytes(0x04865C9, 2) == "90-90";
             set
             {
                 if (value)
                 {
-                    Dm.WriteData(Hwnd, "04865C9", "90 90");
-                    Dm.WriteInt(Hwnd, "04865D1", 0, 2);
+                    Memo.WriteBytes(0x04865C9, "90-90");
+                    Memo.WriteInt(0x04865D1, 2);
                 }
                 else
                 {
-                    Dm.WriteData(Hwnd, "04865C9", "EB 56");
-                    Dm.WriteInt(Hwnd, "04865D1", 0, 3);
+                    Memo.WriteBytes(0x04865C9, "EB-56");
+                    Memo.WriteInt(0x04865D1, 3);
                 }
             }
         }
 
         public bool ZhanDouLiaoLi
         {
-
-            get => Dm.ReadData(Hwnd, "004B33E2", 1) == "EB";
+            get => Memo.ReadBytes(0x004B33E2,1) == "EB";
             set
             {
                 if (value)
                 {
-                    Dm.WriteData(Hwnd, "004B33E2", "EB");
-                    Dm.WriteData(Hwnd, "004B2FCF", "90 90 90 90 90 90");
+                    Memo.WriteBytes(0x004B33E2, "EB");
+                    Memo.WriteBytes(0x004B2FCF, "90-90-90-90-90-90");
                 }
                 else
                 {
-                    Dm.WriteData(Hwnd, "004B33E2", "75");
-                    Dm.WriteData(Hwnd, "004B2FCF", "0F 84 D5 00 00 00");
+                    Memo.WriteBytes(0x004B33E2, "75");
+                    Memo.WriteBytes(0x004B2FCF, "0F-84-D5-00-00-00");
                 }
             }
         }
 
         public bool CaiJiJiaSu
         {
-            get=> Dm.ReadInt(Hwnd, "04077E5", 0)==4500;
-            set => Dm.WriteInt(Hwnd, "04077E5", 0, value ? 4500 : 6000);
+            get => Memo.ReadInt(0x04077E5) == 3000;
+            set => Memo.WriteInt(0x04077E5, value ? 3000 : 4500);
+            
         }
 
         public bool YiDongJiaSu
         {
-            get => Dm.ReadInt(Hwnd, "[010AEF88] + 168", 0) == 300;
-            set => Dm.WriteInt(Hwnd, "[010AEF88] + 168", 0, value ? 300 : 100);
+            get => Memo.ReadInt(Memo.GetPointer(0x010AEF88)+0x168) == 300;
+            set => Memo.WriteInt(Memo.GetPointer(0x010AEF88) + 0x168, value ? 300 : 100);
         }
         
 

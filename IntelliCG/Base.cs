@@ -1,20 +1,21 @@
-﻿using Dm;
+﻿using System.Reflection;
+using IntelliCG.MemoryHelper;
+
 
 namespace IntelliCG
 {
     
     public abstract class Base
     {
-        protected Base(int hwnd)
+       
+        protected Base(Memo memo)
         {
-            Hwnd = hwnd;
-            Dm.WriteInt(Hwnd, "00D5A000", 0, 0);
+            Memo = memo;
         }
-
-
-        public int Hwnd { get; set; }
         
-        protected static dmsoft Dm { get;} = new dmsoft();
+        public Memo Memo { get; set; }
+
+        
     }
 }
 

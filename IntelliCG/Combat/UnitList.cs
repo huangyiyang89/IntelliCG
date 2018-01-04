@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using IntelliCG.MemoryHelper;
+using IntelliCG.Player;
 
 namespace IntelliCG.Combat
 {
@@ -14,10 +17,8 @@ namespace IntelliCG.Combat
         public List<Unit> Enemys { get; }
         public List<Unit> Friends { get; }
 
-        public UnitList(int hwnd) : base(hwnd)
+        public UnitList(Memo memo) : base(memo)
         {
-            //_lastRound = 0;
-            //_lastTime = 0;
             _units = new List<Unit>();
             LastRoundUnits = new List<Unit>();
             Enemys = new List<Unit>();
@@ -33,26 +34,15 @@ namespace IntelliCG.Combat
         {
             get { return _units.Find(u => u.Position == position); }
         }
-        //private int Round => Dm.ReadInt(Hwnd, "00645698", 0);
-
-
-        //private int _lastRound;
-        //private long _lastTime;
         public UnitList Read()
         {
-            //if (_lastRound == Round && DateTime.Now.Ticks - _lastTime < 2000 * 10000)
-            //{
-            //    return this;
-            //}
-            //_lastRound = Round;
-            //_lastTime = DateTime.Now.Ticks;
             LastRoundUnits = _units;
             _units.Clear();
             Enemys.Clear();
             Friends.Clear();
 
-            var roundMod = Dm.ReadInt(Hwnd, "00645378", 2) + 1;
-            var content = Dm.ReadString(Hwnd, "0064" + roundMod + "230", 0, 2000);
+            var roundMod = Memo.ReadInt(0x00645378, 1) + 1;
+            var content = Memo.ReadString(0x00640230 + roundMod * 0x1000, 2000);
             if (content.Length <= 20)
             {
                 return this;
@@ -64,18 +54,17 @@ namespace IntelliCG.Combat
             {
                 var unit = new Unit(entryList.GetRange(i, 11), this);
                 _units.Add(unit);
+                Console.WriteLine($@"{unit.Index},{unit.Name}");
                 if (unit.IsEnemy) { Enemys.Add(unit); }
                 else
                 {
                     Friends.Add(unit);
                 }
             }
-            
-            
             return this;
         }
 
-        public Unit Player => this[Dm.ReadInt(Hwnd, "645710", 0)];
+        public Unit Player => this[Memo.ReadInt(0x645710)];//人物位置
 
         public Unit Pet
         {
@@ -84,6 +73,11 @@ namespace IntelliCG.Combat
                 var index = Player.Index > 4 ? Player.Index - 5 : Player.Index + 5;
                 return this[index];
             }
+        }
+
+        public List<Unit> FindAll(params int[] indexs)
+        {
+            return _units.FindAll(u => indexs.Contains(u.Index));
         }
 
         public Unit GetRandomEnemy()
@@ -103,6 +97,40 @@ namespace IntelliCG.Combat
         {
             var result=_units.Where(u => u.IsEnemy && u.FrontUnit == null).ToList();
             return this[result[_random.Next(result.Count-1)].Index];
+        }
+
+        
+
+        public Unit GetTargetByWeapon(Weapon weapon)
+        {
+            if (weapon == Weapon.HuiLi)
+            {
+                var front=Enemys.FindAll(e => e.IsInFront).Count;
+                var back = Enemys.Count - front;
+                return front > back ? Enemys.Find(e => e.IsInFront) : Enemys.Find(e => !e.IsInFront);
+            }
+
+            if (weapon == Weapon.Gong)
+            {
+                GetRandomEnemy();
+
+            }
+
+            if (weapon == Weapon.XiaoDao)
+            {
+                var target=Enemys.Find(e => e.FrontUnit != null);
+                return target ?? GetRandomEnemy();
+            }
+            
+            return GetRandomFrontEnemy();
+            
+        }
+
+        public bool HasLowHpFriend()
+        {
+            var friend = Friends.Find(f => f.HpPer < 20);
+            return friend != null;
+            
         }
 
     }

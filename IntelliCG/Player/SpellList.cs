@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntelliCG.MemoryHelper;
 
 namespace IntelliCG.Player
 {
@@ -17,8 +18,10 @@ namespace IntelliCG.Player
         public readonly int LevelBase = 0x00E1643C+0x3C;
         public readonly int LevelCostOffset = 0x7C;
         public readonly int LevelOffset = 0x94;
+        public const int CustomIndexBase= 0x00E5BA02;
+        public const int CustomIndexOffset = 0x8;
 
-       
+
 
         private readonly List<Spell> _spells;
 
@@ -27,23 +30,21 @@ namespace IntelliCG.Player
         public Spell this[string name]=> _spells.First(s => s.Name.Contains(name));
         
 
-        public SpellList(int hwnd) : base(hwnd)
+        public SpellList(Memo memo) : base(memo)
         {
             _spells = new List<Spell>();
-            for (var i = 0; i < 12; i++)
+            for (var i = 0; i < 10; i++)
             {
-                _spells.Add(new Spell(Hwnd,i));
+                _spells.Add(new Spell(memo,i));
             }
         }
 
-        public Spell CustomFirstSpell
+        public Spell CustomFirstSpell => GetCustomIndexSpell(0);
+
+        public Spell GetCustomIndexSpell(int customIndex)
         {
-            get
-            {
-                const int baseAddr = 0x00E5BA02;
-                var index = Dm.ReadInt(Hwnd, (baseAddr + 0 * 8).ToString("X"), 2);
-                return _spells[index];
-            }
+            var index = Memo.ReadInt(CustomIndexBase + customIndex * CustomIndexOffset, 1);
+            return _spells[index];
         }
         public Spell EfficientSpell
         {
@@ -60,6 +61,23 @@ namespace IntelliCG.Player
                 }
                 return null;
             }
+        }
+
+        public List<Spell> GetSpellsOrderByCustomIndex()
+        {
+            var list=new List<Spell>();
+            for (var i = 0; i < 10; i++)
+            {
+                list.Add(GetCustomIndexSpell(i));
+            }
+
+            return list;
+        }
+
+        //返回自定义位置上第一个
+        public Spell FindEqualsFirst(params string[] names)
+        {
+            return GetSpellsOrderByCustomIndex().Find(s => names.ToList().Contains(s.Name));
         }
 
        
