@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using IntelliCG.MemoryHelper;
+﻿using MemoLib;
 
 
 namespace IntelliCG
@@ -16,6 +15,7 @@ namespace IntelliCG
         public Memo Memo { get; set; }
 
         
+
     }
 }
 

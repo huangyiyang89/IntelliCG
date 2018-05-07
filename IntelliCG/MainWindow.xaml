@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:IntelliCG"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="300"
-        WindowState="Minimized">
+        WindowState="Minimized"
+        Closed="MainWindow_OnClosed">
     <Grid/>
 </controls:MetroWindow>
 

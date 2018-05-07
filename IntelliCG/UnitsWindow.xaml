@@ -1,0 +1,48 @@
+﻿<controls:MetroWindow x:Class="IntelliCG.UnitsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:IntelliCG"
+        mc:Ignorable="d"
+        Title="显血窗口" Height="180" Width="640" ResizeMode="NoResize" Closed="UnitsWindow_OnClosed">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="/" Grid.Column="0" Grid.Row="0" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp14"/>
+        <Label Content="/" Grid.Column="0" Grid.Row="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp14"/>
+        <Label Content="/" Grid.Column="1" Grid.Row="0" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp12"/>
+        <Label Content="/" Grid.Column="1" Grid.Row="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp12"/>
+        <Label Content="/" Grid.Column="2" Grid.Row="0" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp10"/>
+        <Label Content="/" Grid.Column="2" Grid.Row="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp10"/>
+        <Label Content="/" Grid.Column="3" Grid.Row="0" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp11"/>
+        <Label Content="/" Grid.Column="3" Grid.Row="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp11"/>
+        <Label Content="/" Grid.Column="4" Grid.Row="0" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp13"/>
+        <Label Content="/" Grid.Column="4" Grid.Row="1" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp13"/>
+        
+        <Label Content="/" Grid.Column="0" Grid.Row="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp19"/>
+        <Label Content="/" Grid.Column="0" Grid.Row="3" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp19"/>
+        <Label Content="/" Grid.Column="1" Grid.Row="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp17"/>
+        <Label Content="/" Grid.Column="1" Grid.Row="3" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp17"/>
+        <Label Content="/" Grid.Column="2" Grid.Row="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp15"/>
+        <Label Content="/" Grid.Column="2" Grid.Row="3" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp15"/>
+        <Label Content="/" Grid.Column="3" Grid.Row="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp16"/>
+        <Label Content="/" Grid.Column="3" Grid.Row="3" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp16"/>
+        <Label Content="/" Grid.Column="4" Grid.Row="2" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="Hp18"/>
+        <Label Content="/" Grid.Column="4" Grid.Row="3" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Name="Mp18"/>
+
+        
+    </Grid>
+</controls:MetroWindow>

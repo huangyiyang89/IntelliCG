@@ -1,173 +1,220 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interop;
-using IntelliCG.Combat;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+using IntelliCG.Cheat;
+using IntelliCG.Extensions;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32.SafeHandles;
 
-using MahApps.Metro.Controls;
 
 namespace IntelliCG
 {
-    public partial class GameWindow : MetroWindow
+    public partial class GameWindow
     {
 
-        
+
         public GameWindow(CrossGate cg)
         {
             InitializeComponent();
             Cg = cg;
-            AutoCombat = new AutoCombat(cg);
-            NewTown=Script.Script.GetInstance(cg);
-            MainWindow.GameWindows.Add(this);
-            AutoCombat.Infomation += AutoCombat_OnInfo;
-            RefreshSwitch();
-        }
-        
-        public CrossGate Cg { get; }
-        public AutoCombat AutoCombat { get; }
-
-        public Script.Script NewTown { get; }
-
-        //高速战斗
-        private void Switch1_Click(object sender, RoutedEventArgs e)
-        {
             
-            Cg.Cheat.GaoSuZhanDou = Switch1.IsChecked.GetValueOrDefault();
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
+            
+            MainWindow.GameWindows.Add(this);
+            
+            RegisterTask(Cg.AutoCombat,SwitchZiDongZhanDou);
+            RegisterTask(Cg.AutoWalk,SwitchZiDongYuDi);
+            RegisterTask(Cg.PetCatch,SwitchZiDongZhuaChong);
+            RegisterTask(Cg.Script, SwitchXinCunJiaoBen);
+            RegisterTask(Cg.Producer,SwitchZiDongShengChan);
+            RegisterTask(Cg.PetCatch,SwitchZiDongZhuaChong);
+            RegisterTask(Cg.Poster,SwitchZiDongYouJi);
+            RegisterTask(Cg.AutoCure,SwitchZiDongZhiLiao);
+            RegisterTask(Cg.AutoFood,SwitchZiDongLiaoLi);
+            RegisterTask(Cg.AutoChange,SwitchZiDongHuan);
+            
+            
+            SwitchGaoSuFangShi.Click += (s, e) =>
+            {
+                Cg.Cheater.GaoSuZhanDou=SwitchGaoSuFangShi.IsChecked.GetValueOrDefault();
+            };
+            
+            
+            RefreshSwitch();
+            Cg.Cheater.CaiJiJiaSu = true;
+            Cg.AutoNurse.Start();
+            
+        }
+
+        public CrossGate Cg { get; }
+        public UnitsWindow UnitsWindow { get; set; }
+        
+        private void RegisterTask(TaskBase script,ToggleButton switchButton)
+        {
+            script.Info += On_Info;
+            switchButton.Checked += (s, e) =>
+            {
+                Console.WriteLine(@"Checked");
+                script.Start();
+            };
+            switchButton.Unchecked += (s, e) =>
+            {
+                Console.WriteLine(@"UnChecked");
+                script.Stop();
+            };
+            script.Stopped += (s, e) => switchButton.IsChecked = false;
+            Closed += (s, e) => script.Stop();
         }
        
-        // 步步遇敌
-        private void Switch2_Click(object sender, RoutedEventArgs e)
+        private readonly DispatcherTimer _timer = new DispatcherTimer()
         {
-            Cg.Cheat.BuBuYuDi = Switch2.IsChecked.GetValueOrDefault();
-        }
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        
         //战斗料理
         private void Switch3_Click(object sender, RoutedEventArgs e)
         {
-            Cg.Cheat.ZhanDouLiaoLi = Switch3.IsChecked.GetValueOrDefault();
+            Cg.Cheater.ZhanDouLiaoLi = SwitchZhanDouLiaoLi.IsChecked.GetValueOrDefault();
         }
-        //移动加速
-        private void Switch4_Click(object sender, RoutedEventArgs e)
-        {
-            Cg.Cheat.YiDongJiaSu = Switch4.IsChecked.GetValueOrDefault();
-        }
-        //采集加速
+       
+        //二动吃药
         private void Switch5_Click(object sender, RoutedEventArgs e)
         {
-            Cg.Cheat.CaiJiJiaSu = Switch5.IsChecked.GetValueOrDefault();
+            Cg.Cheater.ErDongJiNeng = SwitchErDongChiYao.IsChecked.GetValueOrDefault();
         }
-        //自动战斗
-        private void Switch6_Click(object sender, RoutedEventArgs e)
-        {
-            AutoCombat.EnableAutoCombat = Switch6.IsChecked.GetValueOrDefault();
-        }
-
+        
         //允许吃喝
         private void Switch7_Click(object sender, RoutedEventArgs e)
         {
-            AutoCombat.EnableItems = Switch7.IsChecked.GetValueOrDefault();
-            
+            Cg.AutoCombat.EnableItems = SwitchYunXuChiHe.IsChecked.GetValueOrDefault();
         }
-
         //烧一技能
         private void Switch8_Click(object sender, RoutedEventArgs e)
         {
-            AutoCombat.AlwaysFirstSpell = Switch8.IsChecked.GetValueOrDefault();
+            Cg.AutoCombat.AlwaysCastFirstSpell = SwitchShaoYiJiNeng.IsChecked.GetValueOrDefault();
         }
-        //自动遇敌
-        private void Switch9_Click(object sender, RoutedEventArgs e)
-        {
-            AutoCombat.EnableAutoWalk = Switch9.IsChecked.GetValueOrDefault();
-        }
+        
         //给宠物吃
         private void Switch10_Click(object sender, RoutedEventArgs e)
         {
-            AutoCombat.EnableFeedPet = Switch10.IsChecked.GetValueOrDefault();
+            Cg.AutoCombat.EnableFeedPet = SwitchChongWuChiHe.IsChecked.GetValueOrDefault();
+        }
+        
+        //显血
+        private void Switch12_Click(object sender, RoutedEventArgs e)
+        {
+            if (SwitchXianXueChuangKou.IsChecked.GetValueOrDefault())
+            {
+                
+               UnitsWindow=new UnitsWindow(Cg);
+               UnitsWindow.Show();
+               UnitsWindow.Closed += (se, ev) => { SwitchXianXueChuangKou.IsChecked = false; };
+
+            }
+            else
+            {
+                UnitsWindow?.Close();
+            }
         }
 
-        private void Switch11_Click(object sender, RoutedEventArgs e)
-        {
-            NewTown.EnableScript = Switch11.IsChecked.GetValueOrDefault();
-        }
+        
         private void GameWindow_OnClosed(object sender, EventArgs e)
         {
-            Cg.Cheat.BuBuYuDi = false;
-            Cg.Cheat.CaiJiJiaSu = false;
-            Cg.Cheat.GaoSuZhanDou = false;
-            Cg.Cheat.YiDongJiaSu = false;
-            Cg.Cheat.ZhanDouLiaoLi = false;
-
-            NewTown.EnableScript = false;
-            AutoCombat.EnableAutoCombat = false;
+            _timer.Stop();
+            Console.WriteLine(@"GameWindow.Close()");
+            Cg.Close();
+            UnitsWindow?.Close();
             MainWindow.GameWindows.Remove(this);
         }
 
-        private  void AutoCombat_OnInfo(string info)
+        private void On_Info(object sender,EventArgs e)
         {
-            if (info.Contains("停止自动遇敌"))
+            RichTextBox.AppendText(((MessageEventArgs)e).Info + "\r\n");
+        }
+        
+        public void MoveGameWindowAndSelf(int x, int y)
+        {
+            var dpiFactor = PresentationSource.FromVisual(this)?.CompositionTarget?.TransformToDevice.M11;
+
+
+            Cg.Memo.MoveWindow(Convert.ToInt32(x * dpiFactor), Convert.ToInt32(y * dpiFactor));
+            FollowGameWindow();
+            
+            
+        }
+        public void FollowGameWindow()
+        {
+           //646,509
+           var dpiFactor = PresentationSource.FromVisual(this)?.CompositionTarget?.TransformToDevice.M11;
+           var rect = Cg.Memo.GetWindowRect();
+           Left = rect.Left / (dpiFactor??1)+3;
+           Top=rect.Bottom / (dpiFactor??1)-2;
+           Title = Cg.Player.Name;
+        }
+        
+        private async void Button1_OnClick(object sender, RoutedEventArgs e)
+        {
+            var reuslt=await this.ShowMessageAsync("告诉你不要点了", "强制关闭游戏，可以断线重连，是否继续？", MessageDialogStyle.AffirmativeAndNegative);
+            if (reuslt == MessageDialogResult.Affirmative)
             {
-                this.Invoke(RefreshSwitch);
-                Task.Run(() => MessageBox.Show(info));
-                return;
+                Cg.Memo.Process.Kill();
             }
-            this.Invoke(() => RichTextBox.AppendText(info+"\r\n"));
         }
 
-
-        public void MoveGameWindowAndSelf(int x,int y)
+        
+        private void Button2_OnClick(object sender, RoutedEventArgs e)
         {
-            var dpiFactor = PresentationSource.FromVisual(this).CompositionTarget.TransformToDevice.M11;
-            Cg.Memo.MoveWindow(Convert.ToInt32(x*dpiFactor), Convert.ToInt32(y *dpiFactor));
-            Left = x+2.5;
-            Top = y + 507;
-            Title = Cg.Player.Name;
+            var s=Cg.Stuffs.FindXiuGe();
+            
+
+        }
+        private void RefreshSwitch()
+        {
+            SwitchGaoSuFangShi.IsChecked = Cg.Cheater.GaoSuZhanDou;
+            SwitchZhanDouLiaoLi.IsChecked = Cg.Cheater.ZhanDouLiaoLi;
+            SwitchErDongChiYao.IsChecked = Cg.Cheater.ErDongJiNeng;
         }
 
+        private  void Timer_Tick(object sender, EventArgs e)
+        {
+            
+            if (Cg.Memo.Process.HasExited)
+            {
+                Close();
+            }
+            else
+            {
+                FollowGameWindow();
+            }
+        }
+        
         private void RichTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             RichTextBox.ScrollToEnd();
-        }
-
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            //东医回蓝 AF EF 18 00 12 1C 4F 4F 4F 54 41 24 59 1D 09 61 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //东医回血 AF EF 18 00 12 1C 4F 4F 4F 54 41 24 59 1D 0F 61 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //东医回宠 AF EF 18 00 12 1C 4F 4F 4F 54 41 24 59 1D 0E 61 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //资深回蓝 AF EF 18 00 1D 1C 4F 4F 4F 54 4F 24 59 1D 37 24 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //资深回血 AF EF 18 00 1D 1C 4F 4F 4F 54 4F 24 59 1D 35 24 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //资深回宠 AF EF 18 00 1D 1C 4F 4F 4F 54 4F 24 59 1D 34 24 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //资深回宠 AF EF 18 00 1C 1C 4F 4F 4F 54 4E 24 59 1D 34 24 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //资深回宠 AF EF 18 00 13 1C 4F 4F 4F 54 4F 24 59 1D 34 24 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF
-            //Cg.Call("AF EF 18 00 12 1C 4F 4F 4F 54 41 24 59 1D 0E 61 41 50 21 5B 5A 2B 17 38 38 4C 46 1D EF AF");
             
-           // Cg.Memo.Process.Kill();
-            //Close();
-            //006130FC =2 加血窗口
-            //Cg.NurseCall();
-            //Cg.RightClick(73,83);
-            //Cg.MoveTo(352,196);
-            //var s=Script.Script.GetInstance(Cg);
-            //s.Run();
-
         }
 
-        private void RefreshSwitch()
+        private void ComboDengDaiShiJiang_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Switch1.IsChecked = Cg.Cheat.GaoSuZhanDou;
-            Switch2.IsChecked = Cg.Cheat.BuBuYuDi;
-            Switch3.IsChecked = Cg.Cheat.ZhanDouLiaoLi;
-            Switch4.IsChecked = Cg.Cheat.YiDongJiaSu;
-            Switch5.IsChecked = Cg.Cheat.CaiJiJiaSu;
-            Switch6.IsChecked = AutoCombat.EnableAutoCombat;
-            Switch7.IsChecked = AutoCombat.EnableItems;
-            Switch8.IsChecked = AutoCombat.AlwaysFirstSpell;
-            Switch9.IsChecked = AutoCombat.EnableAutoWalk;
-            Switch10.IsChecked = AutoCombat.EnableFeedPet;
-            Switch11.IsChecked = NewTown.EnableScript;
+
+            if (Cg != null)
+            {
+                Cg.AutoCombat.GaoSuDelay = ComboDengDaiShiJiang.SelectedIndex > -1
+                    ? (ComboDengDaiShiJiang.SelectedIndex + 4) * 1000
+                    : 4000;
+            }
+        }
+
+        private void SwitchXueShaoTingZhi_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cg.AutoWalk.StopOnHp = SwitchXueShaoTingZhi.IsChecked.GetValueOrDefault();
         }
     }
 }

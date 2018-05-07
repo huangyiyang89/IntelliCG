@@ -5,73 +5,250 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:IntelliCG"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        ShowIconOnTitleBar="True"
+        
         mc:Ignorable="d"
-        Title="GameWindow" Height="500" Width="640" ResizeMode="NoResize"
-                      Closed="GameWindow_OnClosed">
+        Title="GameWindow" Height="300" Width="640" Closed="GameWindow_OnClosed" ResizeMode="NoResize" Icon="icon.ico">
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition />
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="100"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="高速战斗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="步步遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="战斗料理" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="移动加速" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="采集加速" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="5" Text="自动战斗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="6" Text="允许吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="7" Text="烧一技能" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="8" Text="自动遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="9" Text="宠物吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="0" Grid.Row="10" Text="新村脚本" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <controls:ToggleSwitchButton Name="Switch1"  Grid.Column="1" Grid.Row="0" Width="auto" Click="Switch1_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch2" Grid.Column="1" Grid.Row="1" Width="auto" Click="Switch2_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch3" Grid.Column="1" Grid.Row="2" Width="auto" Click="Switch3_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch4" Grid.Column="1" Grid.Row="3" Width="auto" Click="Switch4_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch5" Grid.Column="1" Grid.Row="4" Width="auto" Click="Switch5_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch6" Grid.Column="1" Grid.Row="5" Width="auto" Click="Switch6_Click"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch7" Grid.Column="1" Grid.Row="6" Width="auto" Click="Switch7_Click" ToolTip="自动战斗允许使用补给品"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch8" Grid.Column="1" Grid.Row="7" Width="auto" Click="Switch8_Click" ToolTip="把要烧的技能放第一格"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch9" Grid.Column="1" Grid.Row="8" Width="auto" Click="Switch9_Click" ToolTip="自动走动范围+-2"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch10" Grid.Column="1" Grid.Row="9" Width="auto" Click="Switch10_Click" ToolTip="给宠物仍血瓶料理"></controls:ToggleSwitchButton>
-            <controls:ToggleSwitchButton Name="Switch11" Grid.Column="1" Grid.Row="10" Width="auto" Click="Switch11_Click"></controls:ToggleSwitchButton>
-            <Button Content="别点"  Grid.Row="11" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2" Click="ButtonBase_OnClick"/>
+        <Grid  Grid.Row="0" Grid.Column="0">
+            <controls:MetroAnimatedSingleRowTabControl>
+                <controls:MetroAnimatedSingleRowTabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+                        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="18" />
+                    </Style>
+                </controls:MetroAnimatedSingleRowTabControl.Resources>
+
+                <TabItem Header="战斗">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+
+                        
+
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="省略画面" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchGaoSuFangShi" Grid.Column="1" Grid.Row="0" Width="auto" ToolTip="省略战斗画面"></controls:ToggleSwitchButton>
+
+                        
+
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="自动战斗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongZhanDou" Grid.Column="1" Grid.Row="1" Width="auto"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="2" Grid.Row="1" Text="烧一技能" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchShaoYiJiNeng" Grid.Column="3" Grid.Row="1" Width="auto" Click="Switch8_Click" ToolTip="把要烧的技能放第一格"></controls:ToggleSwitchButton>
+
+
+                        <TextBlock Grid.Column="4" Grid.Row="1" Text="高速等待" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox Name="ComboDengDaiShiJiang" Grid.Column="5"  Grid.Row="1" HorizontalContentAlignment="Right" VerticalAlignment="Center" ToolTip="开启高速时行动等待时间" Margin="6" SelectedIndex="0" SelectionChanged="ComboDengDaiShiJiang_OnSelectionChanged">
+                            <ComboBoxItem Content="4秒"/>
+                            <ComboBoxItem Content="5秒"/>
+                        </ComboBox>
+
+
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="允许吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchYunXuChiHe" Grid.Column="1" Grid.Row="2" Width="auto" Click="Switch7_Click" ToolTip="允许使用物品"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="2" Grid.Row="2" Text="宠物吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchChongWuChiHe" Grid.Column="3" Grid.Row="2" Width="auto" Click="Switch10_Click" ToolTip="允许对宠物使用物品"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="4" Grid.Row="2" Text="队友吃喝" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchYouFangChiHe" Grid.Column="5" Grid.Row="2" Width="auto" Click="Switch10_Click" ToolTip="允许对队友使用物品" IsEnabled="False"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="自动遇敌" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongYuDi" Grid.Column="1" Grid.Row="3" Width="auto" ToolTip="自动步步遇敌"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="2" Grid.Row="3" Text="血少停止" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchXueShaoTingZhi" Grid.Column="3" Grid.Row="3" Width="auto" ToolTip="自动遇敌，有队友血量低时停止" Click="SwitchXueShaoTingZhi_OnClick"></controls:ToggleSwitchButton>
+
+
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="任务">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <TextBlock Text="战斗料理" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZhanDouLiaoLi" Grid.Column="1" Grid.Row="0" Width="auto" Click="Switch3_Click" ToolTip="战斗料理"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="二动吃药" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchErDongChiYao" Grid.Column="1" Grid.Row="1" Width="auto" Click="Switch5_Click"></controls:ToggleSwitchButton>
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="显血窗口" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton   Name="SwitchXianXueChuangKou"  Grid.Column="1" Grid.Row="2" Width="auto" Click="Switch12_Click"></controls:ToggleSwitchButton>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="新村">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <TextBlock Grid.Row="0" Grid.Column="0"  Text="新村脚本" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Grid.Row="0" Grid.Column="1" Name="SwitchXinCunJiaoBen"  Width="auto"></controls:ToggleSwitchButton>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="生产">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="自动生产" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongShengChan"  Grid.Column="1" Grid.Row="0" Width="auto"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="自动邮寄" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongYouJi"  Grid.Column="1" Grid.Row="1" Width="auto" ToolTip="宠物名字改成 物品名-收件人名"></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="自动治疗" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongZhiLiao"  Grid.Column="1" Grid.Row="2" Width="auto" ToolTip=""></controls:ToggleSwitchButton>
+
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="自动料理" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongLiaoLi"  Grid.Column="1" Grid.Row="3" Width="auto" ToolTip="自动吃料理补蓝"></controls:ToggleSwitchButton>
+                        
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="自动换条" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongHuan"  Grid.Column="1" Grid.Row="5" Width="auto" ToolTip="满20组自动换"></controls:ToggleSwitchButton>
+                        </Grid>
+                </TabItem>
+                <TabItem Header="封印">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="自动抓宠" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitchButton Name="SwitchZiDongZhuaChong"  Grid.Column="1" Grid.Row="0" Width="auto"></controls:ToggleSwitchButton>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="其他">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Background="WhiteSmoke"></Border>
+                        <Button Content="别点"  Grid.Row="0"   Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Click="Button1_OnClick"/>
+                        <Button Content="也别点"  Grid.Row="1"   Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Click="Button2_OnClick"/>
+                    </Grid>
+                </TabItem>
+
+
+            </controls:MetroAnimatedSingleRowTabControl>
         </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <RichTextBox Name="RichTextBox" Grid.ColumnSpan="5" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0" TextChanged="RichTextBox_OnTextChanged"></RichTextBox>
-        </Grid>
+
+        <RichTextBox Grid.Column="1" Grid.Row="0" Name="RichTextBox" TextChanged="RichTextBox_OnTextChanged" Margin="2"></RichTextBox>
+
     </Grid>
+
+
+
+
 
 </controls:MetroWindow>
